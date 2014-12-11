@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>client</title>
+<script type="text/javascript" src="src/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+<div id="msg_list">
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	//$('#msg_list').text('msg_list');
+	/*
+	$.ajax({
+		url: 'http://www.push.com/server.php',
+		type: 'POST',
+		dataType: 'json'
+	})
+	.success(function(json) {
+		console.info(json);
+		console.log("success");
+	})
+	.fail(function() {
+		console.log("error");
+	});
+	*/
+	getNewMsg();	
+});
+
+function getNewMsg() {
+	$.ajax({
+		url: 'http://www.push.com/server.php',
+		type: 'POST',
+		dataType: 'json'
+	})
+	.success(function(json) {
+		//console.info(json);
+		//
+		//console.log("success");
+		if (json.statusCode == 200) {
+			$('#msg_list').append('<span>' + json.msg +'</span><br />');
+			console.info(json);
+		}
+
+		getNewMsg();
+	})
+	.fail(function() {
+		console.log("error");
+	});	
+}
+</script>
+</body>
+</html>
